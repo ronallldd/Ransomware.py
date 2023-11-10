@@ -54,7 +54,7 @@ def decrypt(filename,key):
     try:
         decrypted_data = f.decrypt(encrypted_data)
     except cryptography.fernet.InvalidToken:
-        print("[!]Invalid token, most likely the password is incorrect")
+        print("[!]Invalido token,")
         return
 
     with open(filename, "wb") as file:
@@ -65,7 +65,7 @@ def encrypt_folder(foldername, key):
     for child in pathlib.Path(foldername).glob("*"):
         if child.is_file():
         
-            print(f"[*] Encrypting {child}")
+            print(f"[*] Encriptando {child}")
 
             encrypt(child, key)
         
@@ -77,7 +77,7 @@ def decrypt_folder(foldername, key):
 
     for child in pathlib.Path(foldername).glob("*"):
         if child.is_file():
-            print(f"[*] Decrypting {child}")
+            print(f"[*] Desencriptando {child}")
 
             decrypt(child, key)
         elif child.is_dir():
@@ -101,10 +101,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.encrypt:
-        password = getpass.getpass("Enter the password for encryption: ")
+        password = getpass.getpass("Entre com a senha para encriptar: ")
     
     elif args.decrypt:
-        password =getpass.getpass("Enter th epassword you used for encryption: ")
+        password =getpass.getpass("Entre com sua senha para desencriptar: ")
 
     if args.salt_size:
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
     if encrypt_ and decrypt_:
 
-        raise TypeError("Please specify whether you want to encrypt the file or decrypt it. ")
+        raise TypeError("Por favor especifique o arquvo ou pasta que você quer encriptar... ")
 
     elif encrypt_:
         if os.path.isfile(args.path):
@@ -134,4 +134,4 @@ if __name__ == "__main__":
             elif os.path.isdir(args.path):
                 decrypt_folder(args.path, key)
         else:
-            raise TypeError("Please specify whether you want to encrypt the file or decrypt it. ")
+            raise TypeError("Por favor especifique o arquivo que você quer desencriptar. ")
